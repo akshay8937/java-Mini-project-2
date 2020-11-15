@@ -1,0 +1,103 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>AdminController</servlet-name>
+  	<display-name>AdminController</display-name>
+  	<description></description>
+  	<servlet-class>com.cybage.controller.AdminController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>DepartmentHeadController</servlet-name>
+  	<display-name>DepartmentHeadController</display-name>
+  	<description></description>
+  	<servlet-class>com.cybage.controller.DepartmentHeadController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>CitizenController</servlet-name>
+  	<display-name>CitizenController</display-name>
+  	<description></description>
+  	<servlet-class>com.cybage.controller.CitizenController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AppController</servlet-name>
+  	<display-name>AppController</display-name>
+  	<description></description>
+  	<servlet-class>com.cybage.controller.AppController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AdminController</servlet-name>
+  	<url-pattern>/AdminController/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DepartmentHeadController</servlet-name>
+  	<url-pattern>/DepartmentHeadController/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CitizenController</servlet-name>
+  	<url-pattern>/CitizenController/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AppController</servlet-name>
+  	<url-pattern>/AppController</url-pattern>
+  </servlet-mapping>
+  
+ 
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>SecuredBookSite</web-resource-name>
+			<url-pattern>/citizen/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<description>Let only member use this app</description>
+			<role-name>citizen</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+	 <security-constraint>
+		<web-resource-collection>
+			<web-resource-name>SecuredBookSite</web-resource-name>
+			<url-pattern>/admin/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<description>Let only admin use this app</description>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>SecuredBookSite</web-resource-name>
+			<url-pattern>/department/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<description>Let only managers use this app</description>
+			<role-name>department</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+	
+<security-role>
+    <role-name>department</role-name>
+</security-role>
+
+<security-role>
+    <role-name>admin</role-name>
+</security-role>
+
+
+<security-role>
+    <role-name>citizen</role-name>
+</security-role>
+	
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/login.jsp</form-login-page>
+			<form-error-page>/error.jsp</form-error-page>
+		</form-login-config>
+	</login-config>
+</web-app>
