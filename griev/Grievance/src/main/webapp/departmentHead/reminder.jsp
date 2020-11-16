@@ -12,6 +12,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+<%-- Link the Bootstrap css and js and Jquery files --%>
+
 
 <link rel="stylesheet" href="styles.css">
 <script defer
@@ -25,7 +27,8 @@
 </head>
 
 <body>
-	<!-- Navigation bar Of Department Head page -->
+
+<!-- Navigation bar Of Department Head page -->
 
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-dark">
@@ -51,6 +54,8 @@
 					<button type="button" class="btn btn-primary" data-toggle="modal"
 						data-target="#exampleModal" data-whatever="@fat">Transfer
 						Complain</button>
+						
+<%-- Pop Up Box For Transfer Complain Button --%>
 
 					<div class="modal fade" id="exampleModal" tabindex="-1"
 						role="dialog" aria-labelledby="exampleModalLabel"
@@ -74,6 +79,9 @@
 												name="compId" style="width: 15rem">
 										</div>
 										<div class="form-group">
+										
+<%--Show the dynamic List of Department Names --%>
+
 											<label for="message-text" class="col-form-label">Select
 												Department:</label> <br> <select class="custom-select"
 												style="width: 15rem" name="department">
@@ -118,12 +126,14 @@
 
 
 
-		<!-- center text -->
+<!-- center text -->
 
 		<div class=" text-center mt-3 center_text">
 			<h3><c:out value="${reminder[0].deptName}"></c:out> Department</h3>
 		</div>
 
+
+<%-- Show the Table contain list Of Complain --%>
 
 		<div class="container">
 			<table class="table table-striped mt-4">
@@ -153,12 +163,12 @@
 							<td><button type="button" class="btn btn-outline-primary"
 									data-toggle="modal" data-target="#exampleModalCenter">
 									Remark</button>
-									
-									
-							
 								
 								</td>
 								<td>
+								
+<%-- Pop Up Box for Remark Button --%>
+
 									<div class="modal fade" id="exampleModalCenter" tabindex="-1"
 									aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
@@ -208,6 +218,7 @@
 
 		</div>
 
+<%-- Link CDN for Bootstrap --%>
 
 		<link rel="stylesheet"
 			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -221,21 +232,25 @@
 			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 		<script
 			src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-		<!-- Footer -->
+			
+			
+<!-- Footer -->
+
 		<footer class="page-footer font-small blue pt-4 text-white "
 			style="position: fixed; bottom: 0; width: 100%">
 
-			<!-- Copyright -->
+<!-- Copyright -->
+
 			<div class="footer-copyright text-center py-3"
 				style="background-color: #2F363F">
 				© 2020 Copyright: <a
 					href="https://www.cybage.com/worldwide-locations/india/gandhinagar"
 					class="text-white"> www.cybage.com</a>
 			</div>
-			<!-- Copyright -->
+			
 
 		</footer>
-		<!-- Footer -->
+
 </body>
 
 </html>

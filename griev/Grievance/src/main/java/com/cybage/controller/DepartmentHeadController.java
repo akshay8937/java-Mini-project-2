@@ -18,24 +18,31 @@ import com.cybage.service.iDepartmentHeadService;
 public class DepartmentHeadController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
-  
-    iDepartmentHeadService ds = new DepartmentHeadServiceImpl();
-    Department department = new Department();
-		
+//  creating the object of DepartmentHeadService globally, so that every controller use same object.
 	
+    iDepartmentHeadService ds = new DepartmentHeadServiceImpl();
+ 
+		
+//	This Get method handle all GET request coming from the browser.
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		String path = request.getPathInfo();
-		System.out.println(path);
+		
+		
+//		This controller is call when department head wants to see the complains which is reopen by User.
 		
 		if(path.equals("/reopenComplain")) {			
 			try {
 				System.out.println("reopenComplain controller");
 				
-				//String deptId= department.getDeptId();
 				HttpSession session = request.getSession();
 				String deptId = (String) session.getAttribute("deptId");
+				
 				List<Complain> comp =  ds.getReopenComplain(deptId);
+				
+//				set the list of reopen complain and count of no. of list ,in the session object.
+				
 				request.setAttribute("reopen", comp);
 				int reminderCount = ds.getCountOfReminderComplain(deptId);
 				request.setAttribute("reminderCount", reminderCount);
@@ -49,21 +56,27 @@ public class DepartmentHeadController extends HttpServlet {
 			}
 		}
 		
+//		This controller is call every time when department head login. 
+//		Get the username from request Parameter, by using the username ,get the deptId.
+		
 		 if(path.equals("/homePage")) {			
 			try {
-				System.out.println("homePage controller");
+				
 				String username= request.getParameter("username");
-				System.out.println(username);
+			
 				String deptId = ds.getDeptId(username);
+				
 				HttpSession session = request.getSession();
 				session.setAttribute("deptId", deptId);
-				String deptId2 = (String) session.getAttribute("deptId");
-				System.out.println(deptId2);
-				List<Complain> comp =  ds.getListOfComplain(deptId2);
-				System.out.println("controller"+comp);
+				
+				List<Complain> comp =  ds.getListOfComplain(deptId);
 				request.setAttribute("ListOfComplain", comp);
+				
+//				get the no.of list of reopen complain and no.of Reminder request and list of department.
+				
 				int count = ds.getCountOfReopenComplain(deptId);
 				request.setAttribute("count", count);
+				
 				int reminderCount = ds.getCountOfReminderComplain(deptId);
 				request.setAttribute("reminderCount", reminderCount);
 				
@@ -76,45 +89,51 @@ public class DepartmentHeadController extends HttpServlet {
 			}
 		}
 		 
+//		 This controller is call when department head wants to see all the complains which is registered by User.
+		 
 		 if(path.equals("/complains")) {			
 				try {
 					System.out.println("complain controller");
 					
-					HttpSession session = request.getSession();
+					HttpSession session = request.getSession();	
+					String deptId = (String) session.getAttribute("deptId");
 					
-					String deptId2 = (String) session.getAttribute("deptId");
-					System.out.println(deptId2);
-					List<Complain> comp =  ds.getListOfComplain(deptId2);
-					System.out.println("controller"+comp);
+					List<Complain> comp =  ds.getListOfComplain(deptId);
 					request.setAttribute("ListOfComplain", comp);
-					int count = ds.getCountOfReopenComplain(deptId2);
+					
+//					get the no.of list of reopen complain and no.of Reminder request and list of department.
+					
+					int count = ds.getCountOfReopenComplain(deptId);
 					request.setAttribute("count", count);
-					int reminderCount = ds.getCountOfReminderComplain(deptId2);
+					int reminderCount = ds.getCountOfReminderComplain(deptId);
 					request.setAttribute("reminderCount", reminderCount);
 					
 					List<Department> demp = ds.getListOfDepartment();
 					request.setAttribute("departmentList", demp);
 					
 					request.getRequestDispatcher("/departmentHead/departmentHome.jsp").forward(request, response);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 			
+//		 This controller is call when department head submit the remark for complain and change the status, active to inactive of complain .
 		
 		if(path.equals("/submitRemark")) {			
 			try {
 				 HttpSession session = request.getSession();
-				System.out.println("submitRemark controller");
+				
 				String remark= request.getParameter("remark");
 				String compId= request.getParameter("compId");
 				
 				int temp= ds.submitRemark(compId, remark);
 				if(temp>0)
 				{
-					 ds.changeStatus(compId);
-					response.sendRedirect("homePage");
+//					change the status of complain.
 					
+					 ds.changeStatus(compId);
+					response.sendRedirect("homePage");	
 				}
 				
 			} catch (Exception e) {
@@ -122,14 +141,19 @@ public class DepartmentHeadController extends HttpServlet {
 			}
 		}
 		
+//		This controller is call when department head submit the remark for reopen complains and change the status , reopen to inactive of complain.
+		
 		if(path.equals("/reopenRemark")) {			
 			try {
 				 HttpSession session = request.getSession();
-				System.out.println("reopenRemark controller");
+				
 				String remark= request.getParameter("remark");
 				String compId= request.getParameter("compId");
 				
 				int temp= ds.submitRemark(compId, remark);
+				
+//				change the status of reopen complain.
+				
 				if(temp>0)
 				{
 					 ds.changeStatus(compId);
@@ -142,13 +166,16 @@ public class DepartmentHeadController extends HttpServlet {
 			}
 		}
 		
+//		This controller is call when department head wants to transfer the complain from one department to another department.
+		
 		if(path.equals("/transferComplain")) {			
 			try {
-				System.out.println("transferComplain controller");
+				
 				String compId= request.getParameter("compId");
 				String departmentName= request.getParameter("department");
 			
 				int temp=ds.transferComplain(compId, departmentName);
+				
 				if(temp>0)
 				{
 					response.sendRedirect("homePage");
@@ -159,18 +186,19 @@ public class DepartmentHeadController extends HttpServlet {
 			}
 		}
 		
+//		This controller is call when department head wants to see the list of complain which is not solved by department head in given time
+//		and user sent the reminder to department head for reminding him to solve the problem.
 
 		if(path.equals("/reminderList")) {			
 			try {
-				System.out.println("reminder controller");
 				HttpSession session = request.getSession();
 				
-				String deptId2 = (String) session.getAttribute("deptId");
+				String deptId = (String) session.getAttribute("deptId");
 				
-				
-				List<Complain> comp =  ds.getListOfReminder(deptId2);
+				List<Complain> comp =  ds.getListOfReminder(deptId);
 				request.setAttribute("reminder", comp);
-				int count = ds.getCountOfReopenComplain(deptId2);
+				
+				int count = ds.getCountOfReopenComplain(deptId);
 				request.setAttribute("count", count);
 				
 				List<Department> demp = ds.getListOfDepartment();

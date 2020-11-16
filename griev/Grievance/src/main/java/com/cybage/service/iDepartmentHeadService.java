@@ -5,9 +5,13 @@ import java.util.List;
 import com.cybage.model.Complain;
 import com.cybage.model.Department;
 
+// Department Head Interface
+
 public interface iDepartmentHeadService  {
 	
+
 	public List<Complain> getReopenComplain(String deptId) throws Exception;
+	
 	public List<Complain> getListOfComplain(String deptId) throws Exception;
 	
 	public int getCountOfReopenComplain(String deptId) throws Exception;

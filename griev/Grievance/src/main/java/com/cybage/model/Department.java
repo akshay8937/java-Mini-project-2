@@ -32,7 +32,7 @@ public class Department {
 	}
 
 
-	public Department( String deptName) {
+	public Department(String deptName) {
 		super();
 	
 		this.deptName = deptName;
